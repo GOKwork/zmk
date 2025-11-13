@@ -1,0 +1,10 @@
+/ {
+    chosen {
+        zmk,inputs = &inputs;
+    };
+
+    inputs: inputs {
+        compatible = "zmk,inputs";
+        input-gpios = <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+    };
+};
