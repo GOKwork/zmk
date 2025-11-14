@@ -2,4 +2,3 @@
 
 include:
   - board: nice_nano_v2
-    shield: tester_pro_micro
