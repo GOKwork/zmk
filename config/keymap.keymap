@@ -1,7 +1,0 @@
-# config/keymap.keymap
-
-// 最低限のキー1個テスト用
-
-default_layer {
-    bindings = <&kp A>;
-};
