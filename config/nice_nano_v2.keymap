@@ -2,6 +2,22 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    /* 2×2 マトリクスのスキャン設定 */
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        row-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>,
+                    <&gpio0 8 GPIO_ACTIVE_LOW>;
+        col-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>,
+                    <&gpio0 20 GPIO_ACTIVE_LOW>;
+        diode-direction = "row2col";
+    };
+
+    /* ZMK に「この kscan を使え」って教える */
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    /* キーマップ本体（Q W / A S） */
     keymap {
         compatible = "zmk,keymap";
 
