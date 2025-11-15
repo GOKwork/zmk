@@ -2,23 +2,23 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
-    /* 2×2 マトリクスのスキャン設定 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        row-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
-                    <&gpio0 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        col-gpios = <&gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
-                    <&gpio0 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        diode-direction = "row2col";
+        diode-direction = "col2row";
+
+        // 列 = 出力（HIGHを流す側）
+        col-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>,
+                    <&gpio0 8 GPIO_ACTIVE_HIGH>;
+
+        // 行 = 入力（検出側・プルダウン）
+        row-gpios = <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
     };
 
-
-    /* ZMK に「この kscan を使え」って教える */
     chosen {
         zmk,kscan = &kscan0;
     };
 
-    /* キーマップ本体（Q W / A S） */
     keymap {
         compatible = "zmk,keymap";
 
