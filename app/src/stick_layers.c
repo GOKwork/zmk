@@ -4,10 +4,8 @@
 
 LOG_MODULE_REGISTER(stick_layers_test, LOG_LEVEL_INF);
 
-/* どのレイヤーをON/OFFするか（keymap側で layer_1 を定義してある前提） */
+/* 2秒ごとにON/OFFするレイヤー番号（layer_1 = インデックス1） */
 #define TEST_LAYER 1
-
-/* 2秒おきにON/OFFする */
 #define TOGGLE_INTERVAL_MS 2000
 
 static void stick_test_thread(void)
@@ -28,6 +26,11 @@ static void stick_test_thread(void)
     }
 }
 
-K_THREAD_DEFINE(stick_test_thread_id, 1024, stick_test_thread,
+/* アプリ起動と同時にこのスレッドが動き出す */
+K_THREAD_DEFINE(stick_test_thread_id,
+                1024,
+                stick_test_thread,
                 NULL, NULL, NULL,
-                K_PRIO_COOP(10), 0, 0);
+                K_PRIO_COOP(10),
+                0,
+                0);
