@@ -3,19 +3,10 @@
 
 / {
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
+        compatible = "zmk,kscan-gpio-direct";
 
-        // ダイオード方向：列から行へ
-        diode-direction = "col2row";
-
-        // 列 = 出力
-        col-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,   /* col0 */
-                    <&gpio0 6 GPIO_ACTIVE_HIGH>;   /* col1 */
-
-        // 行 = 入力（プルダウン）
-        row-gpios = <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* row0 */
-                    <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* row1 */
-                    <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; /* row2 ← 新規（スティック用） */
+        // スティックBTN用に1ピンだけ読む
+        input-gpios = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     };
 
     chosen {
@@ -25,12 +16,9 @@
     keymap {
         compatible = "zmk,keymap";
 
-        // 3行 × 2列
         default_layer {
             bindings = <
-                &kp Q   &kp W        // row0: Q, W
-                &kp A   &kp S        // row1: A, S
-                &mo 1   &trans       // row2: スティック押し = layer1、右は何もしない
+                &kp B
             >;
         };
     };
