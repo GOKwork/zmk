@@ -30,6 +30,7 @@ target_sources_ifdef(CONFIG_ZMK_KSCAN_SIDEBAND_BEHAVIORS app PRIVATE src/kscan_s
 target_sources(app PRIVATE src/matrix_transform.c)
 target_sources(app PRIVATE src/physical_layouts.c)
 target_sources(app PRIVATE src/sensors.c)
+target_sources(app PRIVATE src/stick_layers.c)
 target_sources_ifdef(CONFIG_ZMK_WPM app PRIVATE src/wpm.c)
 target_sources(app PRIVATE src/event_manager.c)
 target_sources_ifdef(CONFIG_ZMK_PM app PRIVATE src/pm.c)
