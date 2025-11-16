@@ -21,7 +21,7 @@
     keymap {
         compatible = "zmk,keymap";
 
-        // layer 0: いつもの Q W / A S
+        // レイヤー0：いつもの QWAS
         default_layer {
             bindings = <
                 &kp Q   &kp W
@@ -29,19 +29,11 @@
             >;
         };
 
-        // layer 1: 右に倒したとき
+        // レイヤー1：全部 1 2 3 4 （変化が超わかりやすいように）
         layer_1 {
             bindings = <
                 &kp 1   &kp 2
                 &kp 3   &kp 4
-            >;
-        };
-
-        // layer 2: 左に倒したとき
-        layer_2 {
-            bindings = <
-                &kp Z   &kp X
-                &kp C   &kp V
             >;
         };
     };
