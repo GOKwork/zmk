@@ -162,6 +162,10 @@ static int stick_init(const struct device *dev)
     }
 
     LOG_INF("stick_layers initialized");
+
+    /* ★テスト：起動したら即レイヤー1をONにしてみる */
+    zmk_keymap_layer_activate(STICK_LAYER_RIGHT);
+
     return 0;
 }
 
