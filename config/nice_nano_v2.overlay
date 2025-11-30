@@ -1,0 +1,25 @@
+/ {
+    gpio-keys {
+        compatible = "gpio-keys";
+
+        left {
+            gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+            label = "LEFT";
+        };
+
+        up {
+            gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
+            label = "UP";
+        };
+
+        right {
+            gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
+            label = "RIGHT";
+        };
+
+        down {
+            gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+            label = "DOWN";
+        };
+    };
+};
