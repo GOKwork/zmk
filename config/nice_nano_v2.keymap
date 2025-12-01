@@ -24,16 +24,16 @@
         // レイヤー0：いつもの QWAS
         default_layer {
             bindings = <
-                &kp Q   &kp W
-                &kp A   &mo layer_1
+                &kp Q       &kp W
+                &kp A       &mo 1      // ★ Sキーを「レイヤー1に乗るキー」に変更
             >;
         };
 
-        // レイヤー1：全部 1 2 3 4 （変化が超わかりやすいように）
+        // レイヤー1：1 2 3 4
         layer_1 {
             bindings = <
-                &kp 1   &kp 2
-                &kp 3   &kp 4
+                &kp N1      &kp N2
+                &kp N3      &kp N4
             >;
         };
     };
