@@ -1,25 +1,29 @@
 / {
-    gpio-keys {
-        compatible = "gpio-keys";
+    // --- 既存の kscan0 はそのまま ---
 
-        left {
-            gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
-            label = "LEFT";
+    // スティック用の4方向キーを追加する
+    gpio_keys {
+        compatible = "zmk,gpio-keys";
+        label = "StickKeys";
+
+        left_key: left_key {
+            gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zmk,behavior = <&mo 1>;
         };
 
-        up {
-            gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
-            label = "UP";
+        up_key: up_key {
+            gpios = <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zmk,behavior = <&mo 2>;
         };
 
-        right {
-            gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
-            label = "RIGHT";
+        right_key: right_key {
+            gpios = <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zmk,behavior = <&mo 3>;
         };
 
-        down {
-            gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
-            label = "DOWN";
+        down_key: down_key {
+            gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            zmk,behavior = <&mo 4>;
         };
     };
 };
