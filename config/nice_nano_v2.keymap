@@ -18,23 +18,48 @@
         zmk,kscan = &kscan0;
     };
 
+
     keymap {
         compatible = "zmk,keymap";
 
-        // レイヤー0：いつもの QWAS
         default_layer {
             bindings = <
-                &kp Q       &kp W
-                &kp A       &mo 1      // ★ Sキーを「レイヤー1に乗るキー」に変更
+                &kp Q   &kp W
+                &kp A   &kp S
             >;
         };
 
-        // レイヤー1：1 2 3 4
+        // 左
         layer_1 {
             bindings = <
-                &kp N1      &kp N2
-                &kp N3      &kp N4
+                &kp 1 &none
+                &none &none
+            >;
+        };
+
+        // 上
+        layer_2 {
+            bindings = <
+                &kp 2 &none
+                &none &none
+            >;
+        };
+
+        // 右
+        layer_3 {
+            bindings = <
+                &kp 3 &none
+                &none &none
+            >;
+        };
+
+        // 下
+        layer_4 {
+            bindings = <
+                &kp 4 &none
+                &none &none
             >;
         };
     };
 };
+
