@@ -2,11 +2,11 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
-    /* ここから：全部GPIOを直接読むスキャナ定義 */
+    /* ここ：全部GPIOを直接読むスキャナ定義（今までと同じ） */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-direct";
 
-        /* 順番が「キーの位置」になる */
+        /* 順番 = キーのインデックス（0〜7） */
         input-gpios = <
             &gpio0 6  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 0: Q */
             &gpio0 8  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 1: W */
@@ -26,22 +26,55 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /* レイヤー0：普通のQWASだけ + スティックは「レイヤー1に入るキー」 */
+        /* レイヤー0：通常レイヤー。QWAS + 方向でレイヤー切り替え */
         default_layer {
             bindings = <
                 &kp Q   &kp W
                 &kp A   &kp S
 
-                &mo 1   &mo 1   /* 左・上：レイヤー1に一時的に乗る */
-                &mo 1   &mo 1   /* 右・下：同じくレイヤー1 */
+                &mo 1   &mo 2   /* 4: 左 → L1, 5: 上 → L2 */
+                &mo 3   &mo 4   /* 6: 右 → L3, 7: 下 → L4 */
             >;
         };
 
-        /* レイヤー1：QWASの位置を 1 2 3 4 にするテスト用 */
+        /* レイヤー1：左レイヤー（Qの位置だけ1にしてテストしやすく） */
         layer_1 {
             bindings = <
-                &kp N1  &kp N2
-                &kp N3  &kp N4
+                &kp N1  &trans
+                &trans  &trans
+
+                &trans  &trans
+                &trans  &trans
+            >;
+        };
+
+        /* レイヤー2：上レイヤー（Qの位置だけ2） */
+        layer_2 {
+            bindings = <
+                &kp N2  &trans
+                &trans  &trans
+
+                &trans  &trans
+                &trans  &trans
+            >;
+        };
+
+        /* レイヤー3：右レイヤー（Qの位置だけ3） */
+        layer_3 {
+            bindings = <
+                &kp N3  &trans
+                &trans  &trans
+
+                &trans  &trans
+                &trans  &trans
+            >;
+        };
+
+        /* レイヤー4：下レイヤー（Qの位置だけ4） */
+        layer_4 {
+            bindings = <
+                &kp N4  &trans
+                &trans  &trans
 
                 &trans  &trans
                 &trans  &trans
