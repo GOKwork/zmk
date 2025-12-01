@@ -2,64 +2,50 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    /* ここから：全部GPIOを直接読むスキャナ定義 */
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
+        compatible = "zmk,kscan-gpio-direct";
 
-        diode-direction = "col2row";
-
-        col-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
-                    <&gpio0 6 GPIO_ACTIVE_HIGH>;
-
-        row-gpios = <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
-                    <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        /* 順番が「キーの位置」になる */
+        input-gpios = <
+            &gpio0 6  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 0: Q */
+            &gpio0 8  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 1: W */
+            &gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 2: A */
+            &gpio0 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 3: S */
+            &gpio0 2  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 4: 左スティック */
+            &gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 5: 上スティック */
+            &gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 6: 右スティック */
+            &gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 7: 下スティック */
+        >;
     };
 
     chosen {
         zmk,kscan = &kscan0;
     };
 
-
     keymap {
         compatible = "zmk,keymap";
 
+        /* レイヤー0：普通のQWASだけ + スティックは「レイヤー1に入るキー」 */
         default_layer {
             bindings = <
                 &kp Q   &kp W
                 &kp A   &kp S
+
+                &mo 1   &mo 1   /* 左・上：レイヤー1に一時的に乗る */
+                &mo 1   &mo 1   /* 右・下：同じくレイヤー1 */
             >;
         };
 
-        // 左
+        /* レイヤー1：QWASの位置を 1 2 3 4 にするテスト用 */
         layer_1 {
             bindings = <
-                &kp 1 &none
-                &none &none
-            >;
-        };
+                &kp N1  &kp N2
+                &kp N3  &kp N4
 
-        // 上
-        layer_2 {
-            bindings = <
-                &kp 2 &none
-                &none &none
-            >;
-        };
-
-        // 右
-        layer_3 {
-            bindings = <
-                &kp 3 &none
-                &none &none
-            >;
-        };
-
-        // 下
-        layer_4 {
-            bindings = <
-                &kp 4 &none
-                &none &none
+                &trans  &trans
+                &trans  &trans
             >;
         };
     };
 };
-
