@@ -1,21 +1,22 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
 
 / {
-    /* ここ：全部GPIOを直接読むスキャナ定義（今までと同じ） */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-direct";
 
-        /* 順番 = キーのインデックス（0〜7） */
+        /* index とピンの対応（順番が超重要） */
         input-gpios = <
             &gpio0 6  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 0: Q */
             &gpio0 8  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 1: W */
             &gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 2: A */
             &gpio0 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 3: S */
-            &gpio0 2  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 4: 左スティック */
-            &gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 5: 上スティック */
-            &gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 6: 右スティック */
-            &gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 7: 下スティック */
+            &gpio0 2  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 4: 左 */
+            &gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 5: 上 */
+            &gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 6: 右 */
+            &gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 7: 下 */
+            &gpio0 22 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)   /* 8: BTN（押し込み） */
         >;
     };
 
@@ -23,62 +24,74 @@
         zmk,kscan = &kscan0;
     };
 
-    keymap {
+        keymap {
         compatible = "zmk,keymap";
 
-        /* レイヤー0：通常レイヤー。QWAS + 方向でレイヤー切り替え */
+        /* レイヤー0：通常 + 方向レイヤー + BTNでマウスモード */
         default_layer {
             bindings = <
                 &kp Q   &kp W
                 &kp A   &kp S
-
-                &mo 1   &mo 2   /* 4: 左 → L1, 5: 上 → L2 */
-                &mo 3   &mo 4   /* 6: 右 → L3, 7: 下 → L4 */
+                &mo 1   &mo 2   /* 左 → L1, 上 → L2 */
+                &mo 3   &mo 4   /* 右 → L3, 下 → L4 */
+                &tog 5          /* BTN → マウスレイヤー5 ON/OFF */
             >;
         };
 
-        /* レイヤー1：左レイヤー（Qの位置だけ1にしてテストしやすく） */
+        /* レイヤー1：左レイヤー（テスト用に Qの位置だけ変えておく） */
         layer_1 {
             bindings = <
                 &kp N1  &trans
                 &trans  &trans
-
                 &trans  &trans
                 &trans  &trans
+                &trans
             >;
         };
 
-        /* レイヤー2：上レイヤー（Qの位置だけ2） */
+        /* レイヤー2：上レイヤー */
         layer_2 {
             bindings = <
                 &kp N2  &trans
                 &trans  &trans
-
                 &trans  &trans
                 &trans  &trans
+                &trans
             >;
         };
 
-        /* レイヤー3：右レイヤー（Qの位置だけ3） */
+        /* レイヤー3：右レイヤー */
         layer_3 {
             bindings = <
                 &kp N3  &trans
                 &trans  &trans
-
                 &trans  &trans
                 &trans  &trans
+                &trans
             >;
         };
 
-        /* レイヤー4：下レイヤー（Qの位置だけ4） */
+        /* レイヤー4：下レイヤー */
         layer_4 {
             bindings = <
                 &kp N4  &trans
                 &trans  &trans
+                &trans  &trans
+                &trans  &trans
+                &trans
+            >;
+        };
 
-                &trans  &trans
-                &trans  &trans
+        /* レイヤー5：マウスモード */
+        layer_5 {
+            bindings = <
+                &kp N5    &trans
+                &trans    &trans
+                &mkp MOVE_LEFT   &mkp MOVE_UP
+                &mkp MOVE_RIGHT  &mkp MOVE_DOWN
+                &tog 5
             >;
         };
     };
 };
+
