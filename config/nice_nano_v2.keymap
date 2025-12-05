@@ -87,8 +87,8 @@
             bindings = <
                 &kp N5    &trans
                 &trans    &trans
-                &mkp MOVE_LEFT   &mkp MOVE_UP
-                &mkp MOVE_RIGHT  &mkp MOVE_DOWN
+                &kp N1   &kp N2
+                &kp N3   &kp N4
                 &tog 5
             >;
         };
